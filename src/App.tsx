@@ -3,7 +3,23 @@ import "./App.css";
 
 function App() {
   const [inputValue, setInputValue] = useState("");
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const [todos, setTodos] = useState<Todo[]>([
+  {
+    inputValue: "ゴミ出し",
+    id: 1,
+    checked: false,
+  },
+  {
+    inputValue: "洗濯",
+    id: 2,
+    checked: false,
+  },
+  {
+    inputValue: "皿洗い",
+    id: 3,
+    checked: false,
+  },
+]);
 
   type Todo = {
     inputValue: string;
@@ -12,17 +28,20 @@ function App() {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // console.log(e.target.value);
     setInputValue(e.target.value);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (inputValue.trim() === "") {
+      return;
+    }
+
     // 新しいTodoを作成
     const newTodo: Todo = {
       inputValue: inputValue,
-      id: todos.length,
+      id: Date.now(),
       checked: false,
     };
 
@@ -33,7 +52,7 @@ function App() {
   const handleEdit = (id: number, inputValue: string) => {
     const newTodos = todos.map((todo) => {
       if (todo.id === id) {
-        todo.inputValue = inputValue;
+        return { ...todo, inputValue: inputValue };
       }
       return todo;
     });
@@ -43,7 +62,7 @@ function App() {
   const handleChecked = (id: number, checked: boolean) => {
     const newTodos = todos.map((todo) => {
       if (todo.id === id) {
-        todo.checked = !checked;
+        return { ...todo, checked: !checked };
       }
       return todo;
     });
@@ -55,17 +74,27 @@ function App() {
     setTodos(newTodos);
   };
 
+  const handlePurge = () => {
+    const newTodos = todos.filter((todo) => !todo.checked);
+    setTodos(newTodos);
+  };
+
   return (
     <div className="App">
       <div></div>
-      <h2>Todoリスト</h2>
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <div className="header-container">
+  <h2>毎日掃除リスト</h2>
+  <button onClick={handlePurge}>完了済みを削除</button>
+</div>
+  <form onSubmit={(e) => handleSubmit(e)}> 
         <input
           type="text"
           onChange={(e) => handleChange(e)}
           className="inputText"
+          value={inputValue}
+          placeholder="タスクを追加"
         />
-        <input type="submit" value="作成" className="submitButton" />
+        <input type="submit" value="追加" className="submitButton" />
       </form>
       <ul className="todoList">
         {todos.map((todo) => (
@@ -81,7 +110,7 @@ function App() {
               type="checkbox"
               onChange={(e) => handleChecked(todo.id, todo.checked)}
             />
-            <button onClick={() => handleDeleted(todo.id)}>消す</button>
+            <button onClick={() => handleDeleted(todo.id)}>削除</button>
           </li>
         ))}
       </ul>

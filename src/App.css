@@ -1,29 +1,166 @@
-.App {
-  text-align: center;
+body {
+  margin: 0;
+  font-family: "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+  background-color: #f4f7f6;
+  color: #333;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  min-height: 100vh;
+}
+
+.App {
   width: 100%;
-  height: 100vh;
-  flex-direction: column;
+  padding: 25px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
-.inputText {
-  padding: 10px;
+/* ヘッダー */
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* 垂直方向の中央揃え */
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
 }
 
-.submitButton {
+h2 {
+  margin: 0;
+  padding: 0;
+  font-size: 28px;
+  color: #2c3e50;
+}
+
+/* 完了済みを削除ボタンのスタイル */
+.header-container button {
+  background-color: #dc3545;
+  color: white;
   padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 0.95em;
+  transition: background-color 0.3s ease;
+  font-weight: 500;
+}
+
+.header-container button:hover {
+  background-color: #c82333;
+}
+
+/* タスク追加フォーム */
+form {
+  display: flex;
+  gap: 10px;
+}
+
+form .inputText {
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+form .inputText:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+}
+
+form .submitButton {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+form .submitButton:hover {
+  background-color: #218838;
+}
+
+/* TODOリスト */
+.todoList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .todoList li {
-  width: auto;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-top: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #f0f0f0;
 }
 
-.todoList li input {
-  padding: 7px;
+.todoList li:last-child {
+  border-bottom: none;
+}
+
+.todoList li .inputText {
+  flex-grow: 1;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  color: #34495e;
+  word-break: break-all;
+}
+
+.todoList li input[type="checkbox"] {
+  margin-right: 12px;
+  width: 20px;
+  height: 20px;
+  accent-color: #28a745;
+  cursor: pointer;
+}
+
+.todoList li .inputText[disabled] {
+  color: #b0b0b0;
+  text-decoration: line-through;
+}
+
+.todoList li button {
+  background-color: #ffc107;
+  color: #333;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.todoList li button:hover {
+  background-color: #e0a800;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 600px) {
+  .App {
+    padding: 15px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  form {
+    flex-direction: column;
+  }
+
+  form .inputText,
+  form .submitButton {
+    width: 100%;
+  }
 }
