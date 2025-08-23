@@ -20,7 +20,7 @@ type Todo = {
   isCompleted: boolean;
 };
 
-interface TodoPageProps {
+type TodoPageProps = {
   user: User;
   todos: Todo[];
   setTodos: (todos: Todo[]) => void;
