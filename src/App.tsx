@@ -3,7 +3,7 @@ import "./App.css";
 import {
   collection,
   doc,
-  addDoc, 
+  addDoc,
   onSnapshot,
   orderBy,
   query,
@@ -29,8 +29,16 @@ function App() {
   const auth = getAuth(app);
 
   useEffect(() => {
+    let unsubscribeTodos: (() => void) | undefined;
+
     const unsubscribeAuth = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
+
+      if (unsubscribeTodos) {
+        unsubscribeTodos();
+        unsubscribeTodos = undefined;
+      }
+
       if (currentUser) {
         setLoading(true);
         const userDocRef = doc(db, "users", currentUser.uid);
@@ -50,7 +58,7 @@ function App() {
         const todosColRef = collection(db, "users", currentUser.uid, "todos");
         const q = query(todosColRef, orderBy("createdAt", "asc"));
 
-        const unsubscribeTodos = onSnapshot(
+        unsubscribeTodos = onSnapshot(
           q,
           async (querySnapshot) => {
             const todosArray: Todo[] = [];
@@ -87,14 +95,18 @@ function App() {
             setLoading(false);
           }
         );
-        return () => unsubscribeTodos();
       } else {
         setTodos([]);
         setLoading(false);
       }
     });
 
-    return () => unsubscribeAuth();
+    return () => {
+      unsubscribeAuth();
+      if (unsubscribeTodos) {
+        unsubscribeTodos();
+      }
+    };
   }, [auth]);
 
   if (loading) {

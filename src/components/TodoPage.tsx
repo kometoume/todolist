@@ -66,7 +66,7 @@ const TodoPage: React.FC<TodoPageProps> = ({ user, todos, setTodos }) => {
   };
 
   // Todoの完了状態を更新
-  const handleChecked = async (id: string, isCompleted: boolean) => {
+  const handleCheck = async (id: string, isCompleted: boolean) => {
     if (!user) return;
     const todoRef = doc(db, "users", user.uid, "todos", id);
     await updateDoc(todoRef, {
@@ -75,7 +75,7 @@ const TodoPage: React.FC<TodoPageProps> = ({ user, todos, setTodos }) => {
   };
 
   // Todoを削除
-  const handleDeleted = async (id: string) => {
+  const handleDelete = async (id: string) => {
     if (!window.confirm("削除しますか？") || !user) return;
     const todoRef = doc(db, "users", user.uid, "todos", id);
     await deleteDoc(todoRef);
@@ -103,7 +103,7 @@ const TodoPage: React.FC<TodoPageProps> = ({ user, todos, setTodos }) => {
             ログアウト
           </button>
           <button id="purge-button" onClick={handlePurge}>
-            削除
+            完了タスク削除
           </button>
         </div>
       </div>
@@ -125,7 +125,7 @@ const TodoPage: React.FC<TodoPageProps> = ({ user, todos, setTodos }) => {
             <input
               type="checkbox"
               checked={todo.isCompleted}
-              onChange={() => handleChecked(todo.id, todo.isCompleted)}
+              onChange={() => handleCheck(todo.id, todo.isCompleted)}
             />
             <span
               className="todo-title"
@@ -137,7 +137,7 @@ const TodoPage: React.FC<TodoPageProps> = ({ user, todos, setTodos }) => {
             </span>
             <button
               className="delete-button"
-              onClick={() => handleDeleted(todo.id)}
+              onClick={() => handleDelete(todo.id)}
             >
               ✕
             </button>
