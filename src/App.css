@@ -1,3 +1,4 @@
+/* ================== 全体設定 ================== */
 body {
   margin: 0;
   font-family: "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
@@ -12,31 +13,119 @@ body {
 
 .App {
   width: 100%;
-  padding: 25px;
+  max-width: 800px;
+  padding: 30px;
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
 }
 
-/* ヘッダー */
+/* ================== ログイン画面 ================== */
+.auth-container h2 {
+  color: #333;
+  margin-bottom: 25px;
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.auth-form input[type="email"],
+.auth-form input[type="password"] {
+  width: 100%;
+  padding: 14px 15px;
+  border: 1px solid #cdd4da;
+  border-radius: 8px;
+  font-size: 1.1em;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auth-form input[type="email"]:focus,
+.auth-form input[type="password"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+  outline: none;
+}
+
+.auth-form button {
+  width: 100%;
+  padding: 14px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  color: white;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+#login-button {
+  background-color: #007bff;
+}
+
+#login-button:hover {
+  background-color: #0056b3;
+}
+
+#signup-button {
+  background-color: #28a745;
+}
+
+#signup-button:hover {
+  background-color: #218838;
+}
+
+#anonymous-login-button {
+  background-color: #6c757d;
+}
+
+#anonymous-login-button:hover {
+  background-color: #5a6268;
+}
+
+#google-login-button {
+  background-color: #4285f4;
+}
+
+#google-login-button:hover {
+  background-color: #357ae8;
+}
+
+/* ================== Todoリスト画面 ================== */
 .header-container {
   display: flex;
   justify-content: space-between;
-  align-items: center; /* 垂直方向の中央揃え */
+  align-items: center;
   margin-bottom: 20px;
   padding-bottom: 10px;
   border-bottom: 1px solid #eee;
 }
 
-h2 {
+.header-container h2 {
   margin: 0;
   padding: 0;
   font-size: 28px;
   color: #2c3e50;
 }
 
-/* 完了済みを削除ボタンのスタイル */
-.header-container button {
+.user-info {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  font-size: 0.9em;
+  color: #555;
+}
+
+#logout-button {
   background-color: #dc3545;
   color: white;
   padding: 8px 15px;
@@ -48,14 +137,30 @@ h2 {
   font-weight: 500;
 }
 
-.header-container button:hover {
+#logout-button:hover {
   background-color: #c82333;
 }
 
-/* タスク追加フォーム */
+#purge-button {
+  background-color: #ffc107;
+  color: #333;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95em;
+  transition: background-color 0.3s ease;
+  font-weight: 500;
+}
+
+#purge-button:hover {
+  background-color: #e0a800;
+}
+
 form {
   display: flex;
   gap: 10px;
+  margin-top: 30px;
 }
 
 form .inputText {
@@ -88,7 +193,6 @@ form .submitButton:hover {
   background-color: #218838;
 }
 
-/* TODOリスト */
 .todoList {
   margin: 0;
   padding: 0;
@@ -108,15 +212,6 @@ form .submitButton:hover {
   border-bottom: none;
 }
 
-.todoList li .inputText {
-  flex-grow: 1;
-  border: none;
-  background: transparent;
-  font-size: 18px;
-  color: #34495e;
-  word-break: break-all;
-}
-
 .todoList li input[type="checkbox"] {
   margin-right: 12px;
   width: 20px;
@@ -125,30 +220,39 @@ form .submitButton:hover {
   cursor: pointer;
 }
 
-.todoList li .inputText[disabled] {
+.todoList li .todo-title {
+  flex-grow: 1;
+  font-size: 18px;
+  color: #34495e;
+  word-break: break-all;
+}
+
+.todoList li.completed .todo-title {
   color: #b0b0b0;
   text-decoration: line-through;
 }
 
-.todoList li button {
-  background-color: #ffc107;
-  color: #333;
+.delete-button {
+  background-color: transparent;
   border: none;
-  padding: 12px 20px;
-  border-radius: 5px;
+  color: #95a5a6;
+  font-size: 22px;
   cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
+  transition: color 0.2s ease;
+  flex-shrink: 0;
+  margin-left: 10px;
 }
 
-.todoList li button:hover {
-  background-color: #e0a800;
+.delete-button:hover {
+  color: #e74c3c;
 }
 
-/* レスポンシブ対応 */
+/* ================== レスポンシブ対応 ================== */
 @media (max-width: 600px) {
-  .App {
+  .App,
+  .auth-container {
     padding: 15px;
+    margin: 10px;
   }
 
   h2 {
