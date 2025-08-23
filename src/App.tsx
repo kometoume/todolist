@@ -14,12 +14,7 @@ import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import { db, app } from "./firebase";
 import LoginPage from "./components/LoginPage";
 import TodoPage from "./components/TodoPage";
-
-type Todo = {
-  title: string;
-  id: string;
-  isCompleted: boolean;
-};
+import { Todo } from './types';
 
 function App() {
   const [user, setUser] = useState<User | null>(null);

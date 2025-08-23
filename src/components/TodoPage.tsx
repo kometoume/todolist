@@ -13,12 +13,7 @@ import {
 import { getAuth, signOut, User } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 import { db, app } from "../firebase";
-
-type Todo = {
-  title: string;
-  id: string;
-  isCompleted: boolean;
-};
+import { Todo } from '../types';
 
 type TodoPageProps = {
   user: User;
